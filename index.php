@@ -51,7 +51,7 @@ $htmlCode=     '<!DOCTYPE html>
     <div class="container-fluid">
       <ul class="nav flex-column">
   <li class="nav-item">
-    <a class="nav-link active" href="/">Home</a>
+    <a class="nav-link active" href="./">Home</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="?vuln=sql_injection">Sql Injection</a>
