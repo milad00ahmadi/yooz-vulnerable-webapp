@@ -1,1 +1,3 @@
-# vulnerable-webapp
+# Vulnerable Web Application
+<p>vulnerable webapp helps you to test your skills in penetration testing or learn penetration testing and help developers better understand the processes of securing web applications . This application has been created for beginner users and teachers to teach/learn web application security. feel free to edit/add some codes to this application.</p>
+      <div class="alert alert-warning">Do not upload it to your hosting providers public html folder or any internet facing web server as it will be compromised. We recommend downloading and installing <a href="https://www.apachefriends.org/index.html">XAMPP</a> or <a href="http://www.wampserver.com/en/">WAMP</a> onto a local machine inside your LAN which is used solely for testing.</div>
