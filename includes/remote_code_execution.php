@@ -4,7 +4,7 @@ echoHeader("Remote Code Execution");
 ?>
     <div class="col-sm-9 top-margin-2">
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <li class="breadcrumb-item"><a href="./">Home</a></li>
   <li class="breadcrumb-item"><a href="?page=vuln">Vulnerabilities</a></li>
   <li class="breadcrumb-item active">Remote Code Execution</li>
 
