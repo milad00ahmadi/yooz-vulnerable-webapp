@@ -239,7 +239,7 @@ $sqlTableCreatorComments = "CREATE TABLE IF NOT EXISTS comments (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 comment VARCHAR(30))";
 if ($connect->query($sqlCode) === TRUE) {
-	$connect2 = new mysqli($_sv, $_user, $_pass,"GIVuln");
+	$connect2 = new mysqli($_sv, $_user, $_pass,$dbnamegi);
 
 	if ($connect2->query($sqlTableCreator) === TRUE && $connect2->query($sqlTableCreatorComments) === TRUE)
 	{
