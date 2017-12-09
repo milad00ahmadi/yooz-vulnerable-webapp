@@ -19,3 +19,5 @@
 
 </ul>
 
+<hr>
+<p>For installation enter your mysql database information in config/config.php</p>
