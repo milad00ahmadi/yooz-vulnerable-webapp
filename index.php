@@ -63,10 +63,10 @@ $htmlCode=     '<!DOCTYPE html>
     <a class="nav-link" href="?vuln=authentication_bypass">Authentication Bypass</a>
   </li>
    <li class="nav-item">
-    <a class="nav-link" href="?vuln=xss_stored">Cross-site scripting Stored</a>
+    <a class="nav-link" href="?vuln=xss_stored">Stored Cross-site scripting</a>
   </li>
      <li class="nav-item">
-    <a class="nav-link" href="?vuln=xss_reflected">Cross-site scripting Reflected</a>
+    <a class="nav-link" href="?vuln=xss_reflected">Reflected Cross-site scripting</a>
   </li>
    <li class="nav-item">
     <a class="nav-link" href="?vuln=file_upload">File Upload</a>
