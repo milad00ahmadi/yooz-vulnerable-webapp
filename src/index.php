@@ -3,8 +3,9 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 set_error_handler("error");
 
-$page;$vulnerability;
-$htmlCode=     '<!DOCTYPE html>
+$page;
+$vulnerability;
+$htmlCode =     '<!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Vulnerable Web App</title>
@@ -132,155 +133,138 @@ $htmlCode=     '<!DOCTYPE html>
 
     
     ';
-	if(!isset($_GET['vuln']) || empty($_GET['vuln'])){
-	$vulnerability= "";
+if (!isset($_GET['vuln']) || empty($_GET['vuln'])) {
+  $vulnerability = "";
 } else {
-	$vulnerability = $_GET["vuln"];
+  $vulnerability = $_GET["vuln"];
 }
-if (empty($vulnerability)){
-$vulnerability == "";
+if (empty($vulnerability)) {
+  $vulnerability == "";
 }
-if ($vulnerability == "sql_injection")
-{
-	require(getcwd() . "/config/config.php");
+if ($vulnerability == "sql_injection") {
+  require(getcwd() . "/config/config.php");
 
-	require(getcwd() . "/includes/sql.php");
-	
-}else if ($vulnerability == "blind_sql_injection"){
-		require(getcwd() . "/config/config.php");
+  require(getcwd() . "/includes/sql.php");
+} else if ($vulnerability == "blind_sql_injection") {
+  require(getcwd() . "/config/config.php");
 
-	require(getcwd() . "/includes/blind sql.php");
-}else if ($vulnerability == "session_hijacking"){
+  require(getcwd() . "/includes/blind sql.php");
+} else if ($vulnerability == "session_hijacking") {
   include("includes/session_hijacking.php");
-}else if ($vulnerability == "xss_reflected"){
-	require(getcwd() . "/includes/xss_reflected.php");
+} else if ($vulnerability == "xss_reflected") {
+  require(getcwd() . "/includes/xss_reflected.php");
+} else if ($vulnerability == "xss_stored") {
+  require(getcwd() . "/config/config.php");
 
-}else if ($vulnerability == "xss_stored"){
-require(getcwd() . "/config/config.php");
+  require(getcwd() . "/includes/xss_stored.php");
+} else if ($vulnerability == "lfi") {
 
-require (getcwd(). "/includes/xss_stored.php");
-}
-else if ($vulnerability == "lfi"){
+  require(getcwd() . "/includes/lfi.php");
+} else if ($vulnerability == "rfe") {
+  require(getcwd() . "/includes/rfe.php");
+} else if ($vulnerability == "file_upload") {
+  require(getcwd() . "/includes/file_up.php");
+} else if ($vulnerability == "csrf") {
+  require(getcwd() . "/includes/csrf.php");
+} else if ($vulnerability == "rfi") {
+  require(getcwd() . "/includes/rfi.php");
+} else if ($vulnerability == "authentication_bypass") {
+  require(getcwd() . "/config/config.php");
 
-require (getcwd(). "/includes/lfi.php");
-}else if ($vulnerability == "rfe"){
-	require(getcwd() . "/includes/rfe.php");
-}else if ($vulnerability == "file_upload"){
-	require(getcwd() . "/includes/file_up.php");
-}else if ($vulnerability == "csrf"){
-	require(getcwd() . "/includes/csrf.php");
-}else if ($vulnerability == "rfi"){
-	require(getcwd() . "/includes/rfi.php");
-}else if ($vulnerability == "authentication_bypass"){
-			require(getcwd() . "/config/config.php");
+  require(getcwd() . "/includes/authentication bypass.php");
+} else if ($vulnerability == "remote_command_execution") {
 
-	require(getcwd() . "/includes/authentication bypass.php");
-}else if ($vulnerability == "remote_command_execution"){
+  require(getcwd() . "/includes/remote_command_execution.php");
+} else if ($vulnerability == "remote_code_execution") {
 
-	require(getcwd() . "/includes/remote_command_execution.php");
-}else if ($vulnerability == "remote_code_execution"){
+  require(getcwd() . "/includes/remote_code_execution.php");
+} else if ($vulnerability == "lfd") {
 
-	require(getcwd() . "/includes/remote_code_execution.php");
-}else if ($vulnerability == "lfd"){
+  require(getcwd() . "/includes/lfd.php");
+} else if ($vulnerability == "object_injection") {
 
-	require(getcwd() . "/includes/lfd.php");
-}else if ($vulnerability == "object_injection"){
-
-	require(getcwd() . "/includes/object_injection.php");
-}else {
-
-
-if(!isset($_GET['page']) || empty($_GET['page'])){
-	$page= "";
+  require(getcwd() . "/includes/object_injection.php");
 } else {
-	$page = $_GET["page"];
-	
-}
-if (empty($page)){
-$page == "";
-}
-if ($page == "about")
-{
-	require(getcwd() . "/about.php");
-	
-}else if ($page == "vuln"){
-	require(getcwd() . "/vulnerabilities.php");
-}else if ($page == "info"){
-	echo phpinfo();
-	die();
-}else if ($page == "admin_panel"){
-	require(getcwd() . "/includes/adminpanel.php");
-}
-else {
-require(getcwd() . "/config/config.php");
-
-	$connect = new mysqli($_sv, $_user, $_pass);
 
 
-$mysql = mysqli_connect($_sv, $_user, $_pass);
+  if (!isset($_GET['page']) || empty($_GET['page'])) {
+    $page = "";
+  } else {
+    $page = $_GET["page"];
+  }
+  if (empty($page)) {
+    $page == "";
+  }
+  if ($page == "about") {
+    require(getcwd() . "/about.php");
+  } else if ($page == "vuln") {
+    require(getcwd() . "/vulnerabilities.php");
+  } else if ($page == "info") {
+    echo phpinfo();
+    die();
+  } else if ($page == "admin_panel") {
+    require(getcwd() . "/includes/adminpanel.php");
+  } else {
+    require(getcwd() . "/config/config.php");
+    $connect = new mysqli($_sv, $_user, $_pass);
 
-if(@mysqli_select_db($connect, $dbnamegi)){
-echo $htmlCode;
-}else{
-	
+    $mysql = mysqli_connect($_sv, $_user, $_pass);
 
-if ($connect->connect_error) {
-    die("Connection failed: " . $connect->connect_error);
-} 
+    $isDatabaseEmptySQL = 'SELECT COUNT(DISTINCT ' . 'vulnwebapp' . ') AS anyAliasName FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `table_schema` = $_dbnamegi';
+    if (mysqli_select_db($connect, $_dbnamegi) && $connect->query($isDatabaseEmptySQL)) {
+      echo $htmlCode;
+    } else {
 
 
-$sqlCode = "CREATE DATABASE IF NOT EXISTS GIVuln";
-$sqlTableCreator = "CREATE TABLE IF NOT EXISTS login (
+      if ($connect->connect_error) {
+        die("Connection failed: " . $connect->connect_error);
+      }
+
+      $sqlCode = "CREATE DATABASE IF NOT EXISTS vulnwebapp";
+      $sqlTableCreator = "CREATE TABLE IF NOT EXISTS login (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 user VARCHAR(30) NOT NULL,
 password VARCHAR(30) NOT NULL,
 email VARCHAR(50))";
-$sqlTableCreatorComments = "CREATE TABLE IF NOT EXISTS comments (
+      $sqlTableCreatorComments = "CREATE TABLE IF NOT EXISTS comments (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 comment VARCHAR(30))";
-if ($connect->query($sqlCode) === TRUE) {
-	$connect2 = new mysqli($_sv, $_user, $_pass,$dbnamegi);
+      if ($connect->query($sqlCode) === TRUE) {
+        $connect2 = new mysqli($_sv, $_user, $_pass, $_dbnamegi);
 
-	if ($connect2->query($sqlTableCreator) === TRUE && $connect2->query($sqlTableCreatorComments) === TRUE)
-	{
-		
-	
-			$sqlInsertInTable = "INSERT INTO login (user, password, email)
+        if ($connect2->query($sqlTableCreator) === TRUE && $connect2->query($sqlTableCreatorComments) === TRUE) {
+
+
+          $sqlInsertInTable = "INSERT INTO login (user, password, email)
 VALUES ('Admin', 'admin_Password', 'admin@example.com')";
-		$sqlInsertInTable2 = "INSERT INTO login (user, password, email)
+          $sqlInsertInTable2 = "INSERT INTO login (user, password, email)
 VALUES ('King', 'coder', 'kingcoder@example.com')";
-		$sqlInsertInTable3 = "INSERT INTO login (user, password, email)
+          $sqlInsertInTable3 = "INSERT INTO login (user, password, email)
 VALUES ('guardiran', 'guardiran', 'info@guardiran.org')";
-		$sqlInsertInTable4 = "INSERT INTO login (user, password, email)
+          $sqlInsertInTable4 = "INSERT INTO login (user, password, email)
 VALUES ('salam', 'salam_pass', 'salam@example.com')";
 
-	if (mysqli_query($connect2, $sqlInsertInTable) && mysqli_query($connect2, $sqlInsertInTable2) && mysqli_query($connect2, $sqlInsertInTable3) && mysqli_query($connect2, $sqlInsertInTable4)) {
-		echo $htmlCode;
+          if (mysqli_query($connect2, $sqlInsertInTable) && mysqli_query($connect2, $sqlInsertInTable2) && mysqli_query($connect2, $sqlInsertInTable3) && mysqli_query($connect2, $sqlInsertInTable4)) {
+            echo $htmlCode;
+          } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          }
+        } else {
+          echo "Error While Inserting Table <br/> Error : " . $connect2->error;
+        }
+      } else {
+        echo "Error While Connecting To DataBase <br/> Error" . $connect->error;
+      }
 
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-}
-}else {
-		echo "Error While Inserting Table <br/> Error : " . $connect2->error;
-		
-	}
-
-
-} else {
-    echo "Error While Connecting To DataBase <br/> Error" . $connect->error;
-}
-
-$connect->close();
-}
+      $connect->close();
+    }
+  }
 }
 
-}
-
-function error($err, $errtxt) {
+function error($err, $errtxt)
+{
   echo '<html><head><link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script></head><body><div class="container"><div class="alert alert-danger"><strong>Error </strong>' . $errtxt . "</div></div></body></html>";
   die();
 }
-?>
-	
