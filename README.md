@@ -25,3 +25,6 @@ $ docker-compose up --build server
 * PHP Object Injection
 
 For installation enter your mysql database credentials in `src/config/config.php`
+
+
+![Screenshot](https://github.com/milad00ahmadi/vulnerable-web-application/blob/master/screenshot.png?raw=truee)
