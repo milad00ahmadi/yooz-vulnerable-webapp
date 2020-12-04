@@ -32,3 +32,5 @@ services:
     build:
       context: "./"
       dockerfile: "./docker-files/composer.dockerfile"
+    volumes:
+      - './src:/var/www/html/'
