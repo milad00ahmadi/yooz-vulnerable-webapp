@@ -4,21 +4,22 @@ services:
     build:
       context: "./"
       dockerfile: "./docker-files/nginx.dockerfile"
-    ports: 
+    ports:
       - '8000:80'
     volumes:
       - './nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
-      - './src:/var/www/html'
+      - './backend:/var/www/html'
     depends_on:
       - php
-      - mariadb 
+      - mariadb
       - adminer
   php:
     build:
       context: "./"
       dockerfile: "./docker-files/php.dockerfile"
     volumes:
-      - './src:/var/www/html'
+      - './backend:/var/www/html'
+      - '/var/www/html/cache'
   mariadb:
     image: mariadb
     env_file: './env/mariadb.env'
@@ -33,4 +34,23 @@ services:
       context: "./"
       dockerfile: "./docker-files/composer.dockerfile"
     volumes:
-      - './src:/var/www/html/'
+      - './backend:/var/www/html/'
+
+  npm:
+    build:
+      context: './'
+      dockerfile: './docker-files/npm.dockerfile'
+    volumes:
+    - './frontend:/var/www/html/'
+
+  frontend-dev:
+    build:
+      context: './'
+      dockerfile: './docker-files/angular-dev.dockerfile'
+    volumes:
+      - './frontend:/var/www/html/'
+      - '/var/www/html/node_modules'
+    ports:
+      - '4200:4200'
+    tty: true
+    stdin_open: true

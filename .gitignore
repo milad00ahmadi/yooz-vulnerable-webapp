@@ -1,1 +1,5 @@
-./src/vendor
+./backend/vendor/
+./backend/vendor/*
+./backend/.env
+./backend/cache
+./frontend/node_modules
