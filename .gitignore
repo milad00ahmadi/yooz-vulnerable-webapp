@@ -1,4 +1,4 @@
-./backend/vendor/
+./backend/vendor
 ./backend/vendor/*
 ./backend/.env
 ./backend/cache
