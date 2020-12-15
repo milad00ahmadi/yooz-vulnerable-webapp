@@ -3,3 +3,5 @@
 ./backend/.env
 ./backend/cache
 ./frontend/node_modules
+./backend/cache/*
+.idea

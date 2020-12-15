@@ -4,8 +4,13 @@
 namespace App\Vulnerabilities;
 
 
-class BlindSQLInjection extends SQLInjection
+use App\Contracts\VulnerabilityContract as VulnerabilityContract;
+use App\Traits\InjectionTrait;
+
+class BlindSQLInjection implements VulnerabilityContract
 {
+    use InjectionTrait;
+
     private $keyword;
 
     /**
@@ -26,13 +31,12 @@ class BlindSQLInjection extends SQLInjection
             $result = 'Product Found';
         }
 
-        $this->connection->close();
         return $result;
     }
 
     protected function getQuery(): string
     {
-        return "SELECT id, name, price, description FROM products LIKE name='" . $this->keyword . "'";
+        return "SELECT id, name, price, description FROM products WHERE name LIKE '%{$this->keyword}%'";
     }
 
 }

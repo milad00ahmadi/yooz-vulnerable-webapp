@@ -3,26 +3,14 @@
 namespace App\Vulnerabilities;
 
 use App\Contracts\VulnerabilityContract as VulnerabilityContract;
-use App\Exceptions\DatabaseException;
-use mysqli;
+use App\Exceptions\ValidationException;
+use App\Traits\InjectionTrait;
 
 class SQLInjection implements VulnerabilityContract
 {
+    use InjectionTrait;
     protected string $id;
-    protected mysqli $connection;
 
-
-    public function execute()
-    {
-        try {
-            $query = $this->getQuery();
-            $results = $this->createConnection()->executeQuery($query);
-
-            return $this->createResults($query, $results);
-        } catch (\Throwable $exception) {
-            return $this->createError($query, $exception);
-        }
-    }
 
     /**
      * @return string
@@ -44,50 +32,11 @@ class SQLInjection implements VulnerabilityContract
             }
         }
 
-        $this->connection->close();
         return $rows;
     }
 
-    /**
-     * @return SQLInjection
-     * @throws DatabaseException
-     */
-    public function createConnection()
-    {
-        $connection = new mysqli(config('DATABASE_URL'), config('DATABASE_USERNAME'), config('DATABASE_PASSWORD'), config('DATABASE_NAME'));
-        if ($connection->connect_error) {
-            throw DatabaseException::create('error while connecting to database');
-        }
-        $this->connection = $connection;
 
-        return $this;
-    }
 
-    /**
-     * @param $query
-     * @param $results
-     * @return array
-     */
-    protected function createResults($query, $results)
-    {
-        return [
-            'query' => $query,
-            'data' => $results
-        ];
-    }
-
-    /**
-     * @param $query
-     * @param $exception
-     * @return array
-     */
-    protected function createError($query, $exception)
-    {
-        return [
-            'query' => $query,
-            'exception' => $exception->getMessage()
-        ];
-    }
 
     /**
      * @param string $id

@@ -7,6 +7,7 @@ namespace App;
 use App\Config\RouteConfigKeys;
 use App\Controllers\GeneralController;
 use App\Controllers\InjectionController;
+use App\Middlewares\AuthValidator;
 use App\Middlewares\IdValidator;
 use App\Middlewares\NameValidator;
 use App\Services\Request;
@@ -35,6 +36,13 @@ return [
         RouteConfigKeys::CONTROLLER => InjectionController::class,
         RouteConfigKeys::CONTROLLER_ACTION => 'blindSqli',
         RouteConfigKeys::CONTROLLER_MIDDLEWARES => [NameValidator::class]
+    ],
+    [
+        RouteConfigKeys::ROUTE_PATH => '/api/admin-bypass',
+        RouteConfigKeys::HTTP_METHOD => Request::METHOD_POST,
+        RouteConfigKeys::CONTROLLER => InjectionController::class,
+        RouteConfigKeys::CONTROLLER_ACTION => 'authBypass',
+        RouteConfigKeys::CONTROLLER_MIDDLEWARES => [AuthValidator::class]
     ],
 
 ];

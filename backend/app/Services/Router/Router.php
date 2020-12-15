@@ -183,11 +183,20 @@ class Router
         if (isset($middlewares[0]))
             $middlewares[0]->handle($this->request);
 
+        $this->setHeaders();
+
         $result = $controller->{$method}(...array_values($vars));
         if (gettype($result) == 'array')
             echo json_encode($result);
 
         unset($state);
+    }
+
+    public function setHeaders()
+    {
+        if (strpos($this->request->getPath(), 'api') > 0) {
+            header('Content-Type: application/json');
+        }
     }
 
     public function printUncaughtError(Throwable $exception)
@@ -197,7 +206,6 @@ class Router
             'message' => 'something went wrong',
             'error' => $exception->getMessage(),
             'stacktrace' => $exception->getTraceAsString(),
-
         ]);
     }
 

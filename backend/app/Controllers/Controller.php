@@ -11,7 +11,6 @@ abstract class Controller
      * @var Response
      */
     private Response $response;
-
     /**
      * @var Request
      */
@@ -25,6 +24,8 @@ abstract class Controller
     {
         $this->response = $response;
         $this->request = $request;
+
+
     }
 
     /**
